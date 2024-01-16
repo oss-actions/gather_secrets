@@ -1,0 +1,4 @@
+name: Gather Secrets
+runs: { using: node20, main: dist/main.js }
+inputs: { secrets: { required: true }, regex: { required: true } }
+outputs: { secrets: { description: The secrets gathered from the repository } }
