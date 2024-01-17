@@ -1,4 +1,8 @@
-import { getInput, setOutput } from "jamesons-actions-toolkit";
+import {
+	getInput,
+	setOutput,
+	appendGithubEnvironment,
+} from "jamesons-actions-toolkit";
 
 export async function action() {
 	const regex = getInput("regex", { type: (value) => new RegExp(value, "g") });
@@ -10,5 +14,7 @@ export async function action() {
 		if (!regex.test(key)) continue;
 		outputSecrets[key] = value;
 	}
-	setOutput("secrets", JSON.stringify(outputSecrets));
+	const GITHUB_SECRETS_JSON = JSON.stringify(outputSecrets);
+	setOutput("secrets", GITHUB_SECRETS_JSON);
+	appendGithubEnvironment({ GITHUB_SECRETS_JSON });
 }
